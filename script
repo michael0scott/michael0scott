@@ -1,0 +1,34 @@
+import praw
+
+reddit = praw.Reddit(client_id = 'dwUjUKN3cyr1-w',
+                     client_secret = '7UTKg5wvZX7XllDkwVDTe9GFeFiFlA',
+                     user_agent = 'picantemoon',
+                     #username = 'picante01',
+                     #password = 'DxFzbxKG-2cGz+#'
+                     )
+
+print(reddit.read_only)
+
+subreddit = reddit.subreddit("CryptoMoonShots")
+
+hot = subreddit.hot(limit = 11)
+new = subreddit.new(limit = 5)
+controv = subreddit.controversial(limit = 10)
+top = subreddit.top(limit = 10)
+gilded = subreddit.gilded(limit = 10)
+
+gmarkers = ["liquidity locked", "Liquidity Locked", "Liquidity locked", "liquidity Locked",
+            "locked liquidity", "Locked Liquidity", "Locked liquidity", "locked Liquidity",
+            "liquidity is locked", "Liquidity is locked", "Liquidity is Locked", "Liquidity Is Locked",
+            "Liquidity has been locked", "Liquidity was locked", "liquidity was locked", "liquidity has been locked"]
+
+    for submission in new:
+    if any(x in submission.selftext for x in gmarkers):
+        print (submission.title)
+        print("\nYes! Locked Liquidity :)")
+        print(submission.url)
+        print("----------")
+    else:
+        print (submission.title)
+        print("\nNo! No Locked Liquidity :(")
+        print("----------")
